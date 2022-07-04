@@ -1,0 +1,6 @@
+  station_essence:
+  - sensor.prixcarburant_82000006
+  - sensor.prixcarburant_82000007
+  - sensor.prixcarburant_82000010
+  - sensor.prixcarburant_82000011
+  - sensor.prixcarburant_82000015

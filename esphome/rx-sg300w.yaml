@@ -1,0 +1,179 @@
+esphome:
+  name: rx-sg300w
+  includes:
+    - SG300W.h
+
+  libraries:
+    - NETSGPClient
+    - EspSoftwareSerial
+#    - ESPPerfectTime
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+#logger:
+#  level: DEBUG 
+#  baud_rate: 115200
+
+# Enable Home Assistant API
+api:
+
+
+ota:
+  password: "bc3d5863ddecd58953528805bd462344"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.0.55
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+    dns1: 8.8.8.8 
+    dns2: 192.168.0.1
+
+#  output_power: 10dB
+#  fast_connect: true
+#  power_save_mode: HIGH
+
+  ap:
+    ssid: "Esphome-SG300W"
+    password: "SG300w001"
+
+web_server:
+  port: 80
+
+captive_portal:
+
+#font:
+#  - file: "fonts/FreeSans.ttf"
+#    id: Free_font
+#    size: 10
+#  - file: "fonts/LiberationSans.ttf"
+#    id: Lib_font
+#    size: 10
+
+#i2c:
+#  sda: D2
+#  scl: D1
+
+#display:
+#  - platform: ssd1306_i2c
+#    model: "SSD1306 64x48"
+#    reset_pin: D0
+#    address: 0x3C
+#    id: my_display
+#    pages:
+#    - id: page1
+#      lambda: |-
+#          it.printf(0, 0, id(Free_font), "Production PV");
+#          it.line(0, 12, 64, 12);
+#          it.printf(0, 14, id(Lib_font), "Vdc = %.1f V", id(pv_vdc).state);
+#          it.printf(0, 26, id(Lib_font), "Adc = %.1f A", id(pv_adc).state);
+#          it.printf(0, 38, id(Lib_font), "Wdc = %.1f W", id(pv_wdc).state);
+#    - id: page2
+#      lambda: |-
+#          it.printf(0, 0, id(Free_font), "Production AC");
+#          it.line(0, 12, 64, 12);
+#          it.printf(0, 14, id(Lib_font), "Vac = %.1f V", id(pv_vac).state);
+#          it.printf(0, 26, id(Lib_font), "Aac = %.1f A", id(pv_aac).state);
+#          it.printf(0, 38, id(Lib_font), "Wac = %.1f W", id(pv_wac).state);
+#    - id: page3
+#      lambda: |-
+#          it.printf(0, 0, id(Free_font), "Rendement");
+#          it.printf(0, 11, id(Lib_font), "R = %.1f%%", id(pv_rend).state);
+#          it.line(0, 23, 64, 23);
+#          it.print(0, 27, id(Free_font), "Prod. Totale");
+#          it.printf(0, 37, id(Lib_font), "Wac = %.1f kW", id(pv_totalkW).state);
+#    - id: page4
+#      lambda: |-
+#          it.print(0, 0, id(Free_font), "Temp");
+#          it.line(0, 12, 64, 12);
+#          it.printf(20, 22, id(Lib_font), "%.1f °C", id(pv_temp).state);
+#    - id: page5
+#      lambda: |-
+#          it.print(0, 0, id(Free_font), "Time");
+#          it.line(0, 12, 64, 12);
+#          it.strftime(15, 22, id(Lib_font), "%H:%M", id(sntp_time).now());
+#          it.strftime(6, 35, id(Lib_font), "%d-%m-%Y", id(sntp_time).now());
+
+# For example cycle through pages on a timer
+#interval:
+#  - interval: 5s
+#    then:
+#      - display.page.show_next: my_display
+#      - component.update: my_display
+
+time:
+  - platform: sntp
+    id: sntp_time
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto my_custom = new customUartSg300w();
+    App.register_component(my_custom);
+    return {my_custom->Vdc_sensor, my_custom->Adc_sensor, my_custom->Wdc_sensor, my_custom->Vac_sensor, my_custom->Aac_sensor, my_custom->Wac_sensor,  my_custom->Wtot_sensor,  my_custom->Temp_sensor};
+
+
+#    return {my_custom->Vdc_sensor, my_custom->Adc_sensor, my_custom->Wdc_sensor, my_custom->Vac_sensor, my_custom->Aac_sensor, my_custom->Wac_sensor,  my_custom->Wtot_sensor,  my_custom->Temp_sensor,  my_custom->Rend_sensor,  my_custom->kW_lastDay_sensor};
+
+
+
+  sensors:
+  - name: "Vdc"
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    id: pv_vdc
+    
+  - name: "Adc"
+    unit_of_measurement: A
+    accuracy_decimals: 2
+    id: pv_adc
+    
+  - name: "Wdc"
+    unit_of_measurement: W
+    accuracy_decimals: 1
+    id: pv_wdc
+    
+  - name: "Vac"
+    unit_of_measurement: V
+    accuracy_decimals: 0
+    id: pv_vac
+    
+  - name: "Aac"
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    id: pv_aac
+    
+  - name: "Wac"
+    unit_of_measurement: W
+    accuracy_decimals: 0
+    id: pv_wac
+    device_class: energy
+    
+  - name: "Total_kW"
+    unit_of_measurement: "kWh"
+    accuracy_decimals: 1
+    id: pv_totalkW
+    device_class: power
+    
+  - name: "Temp"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    id: pv_temp
+    
+  - name: "Rendement"
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    id: pv_rend
+    
+  - name: "day_kWh"
+    unit_of_measurement: "kWh"
+    accuracy_decimals: 0
+    id: day_kWh
+    device_class: power
+    
+
+    

@@ -1,0 +1,8 @@
+  host: 192.168.0.26
+  name: TV LG
+  customize:
+    sources:
+      - livetv
+      - youtube
+      - arte
+      

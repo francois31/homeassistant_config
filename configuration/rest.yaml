@@ -1,0 +1,50 @@
+# curl -k --user m2madmin:FmTyt8TyRTjf https://192.168.0.40/rsa1/MeasurementData;sId=205;ch=1
+
+
+  - authentication: basic
+    username: "m2madmin"
+    password: !secret wiser_psswd
+    scan_interval: 60
+#    timeout: 200
+    resource: "https://192.168.0.40/rsa1/MeterInstantData"
+    verify_ssl: false
+
+    sensor:
+      - name: "Wiser Conso Maison"
+        value_template: "{{ value_json.MeterInstantData[0].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser Chauffage"
+        value_template: "{{ value_json.MeterInstantData[1].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser 1"
+        value_template: "{{ value_json.MeterInstantData[2].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser ECS"
+        value_template: "{{ value_json.MeterInstantData[3].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser Prises"
+        value_template: "{{ value_json.MeterInstantData[4].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser Autres"
+        value_template: "{{ value_json.MeterInstantData[5].powerTActive }}"
+        unit_of_measurement: "W"
+        
+      - name: "Wiser Ventilation"
+        value_template: "{{ value_json.MeterInstantData[6].powerTActive }}"
+        unit_of_measurement: "W"
+        
+
+ 
+
+
+
+
+
+
+
+

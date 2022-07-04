@@ -1,0 +1,4 @@
+  energy:
+    source: sensor.wiser_conso_maison
+    name: Conso Maison
+    cycle: daily

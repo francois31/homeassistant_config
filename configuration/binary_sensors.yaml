@@ -1,0 +1,11 @@
+   - platform: rflink
+     devices:
+       pt2262_00174754_0:
+         name: PIR Entrance
+         device_class: motion
+         off_delay: 5
+       pt2262_00174758_0:
+         name: PIR Living Room
+         device_class: motion
+         off_delay: 5       
+       

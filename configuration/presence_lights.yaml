@@ -1,0 +1,12 @@
+# switch.ext_entree
+
+  light_group: switch.ext_entree
+  light_profile: reading
+  device_group: person.francois
+  disable_turn_off: true
+
+
+
+
+
+

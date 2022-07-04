@@ -1,0 +1,4 @@
+  platform: generic
+  still_image_url: https://api.sat24.com/crop?type=rainTMC&lat=43.7727108&lon=1.2700485&width=600&height=600&zoom=2.00&continent=eu
+  name: MeteoRadar
+

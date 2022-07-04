@@ -1,0 +1,37 @@
+- id: '1645515439233'
+  alias: Arrivée de nuit
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.moto_g_8_power
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: e0a7cfa68567fdcd86846483e183cd50
+    entity_id: switch.ext_entree
+    domain: switch
+  mode: single
+- id: '1645515753962'
+  alias: Eteinds lumière extérieure
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.moto_g_8_power
+    zone: zone.home
+    event: leave
+  condition:
+  - condition: device
+    type: is_on
+    device_id: e0a7cfa68567fdcd86846483e183cd50
+    entity_id: switch.ext_entree
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: e0a7cfa68567fdcd86846483e183cd50
+    entity_id: switch.ext_entree
+    domain: switch
+  mode: single

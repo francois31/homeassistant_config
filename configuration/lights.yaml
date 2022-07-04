@@ -1,0 +1,21 @@
+  - platform: rflink
+    automatic_add: true
+    device_defaults:
+      fire_event: true
+      signal_repetitions: 2
+    ignore_devices:
+    - ningbo64*
+    - rftech*
+    devices:
+      tristate_800aa1_10:
+        name: PC1
+      tristate_800aa4_10:
+        name: PC2
+      tristate_800a90_10:
+        name: PC3
+      tristate_800a60_10:
+        name: PC4
+      tristate_8009a0_10:
+        name: PC5
+
+

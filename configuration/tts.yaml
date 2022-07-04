@@ -1,0 +1,7 @@
+  - platform: google_translate
+    language: "fr"
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+    base_url: http://192.168.0.23:8123
+    service_name: hapi_say

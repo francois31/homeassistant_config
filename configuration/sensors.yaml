@@ -1,0 +1,136 @@
+## RF Link
+##
+  - platform: rflink
+    automatic_add: true
+    ignore_devices:
+    - ningbo64*
+    - rftech*
+    devices:
+#-----------------------------------------
+#   Mezzanine
+#alectov4_5af8
+      alectov4_5af8_temp:
+        sensor_type: temperature
+#        name: Mezzanine_temp
+      alectov4_5af8__bat:
+        sensor_type: battery
+#        name: Mezzanine_bat
+      alectov4_5af8_hum:
+        sensor_type: humidity
+#        name: Mezzanine_hum
+
+#-----------------------------------------
+#   Exterieur 
+#
+      auriol_0032_temp:
+        sensor_type: temperature
+#        name: exterieur_temp
+      auriol_0032_bat:
+        sensor_type: battery
+#        name: exterieur_bat
+
+#-----------------------------------------
+# Celier
+# 45113 / 45813
+      f007_th_45113_temp:
+        sensor_type: temperature
+#        name: celier_temp
+      f007_th_45113_bat:
+        sensor_type: battery
+#        name: celier_bat
+      f007_th_45113_hum:
+        sensor_type: humidity
+#        name: celier_hum
+
+#-----------------------------------------
+# Salon
+#
+      f007_th_45455_temp:
+        sensor_type: temperature
+#        name: salon_temp
+      f007_th_45455_bat:
+        sensor_type: battery
+#        name: salon_bat
+      f007_th_45455_hum:
+        sensor_type: humidity
+#        name: salon_hum
+
+#-----------------------------------------
+# CH1
+#
+      f007_th_45d90_temp:
+        sensor_type: temperature
+#        name: ch1_temp
+      f007_th_45d90_bat:
+        sensor_type: battery
+#        name: ch1_bat
+      f007_th_45d90_hum:
+        sensor_type: humidity
+#        name: ch1_hum
+
+#-----------------------------------------
+# CH2
+#
+      f007_th_456a1_temp:
+        sensor_type: temperature
+#        name: ch2_temp
+      f007_th_456a1_bat:
+        sensor_type: battery
+#        name: ch2_bat
+      f007_th_456a1_hum:
+        sensor_type: humidity
+#        name: ch2_hum
+
+#-----------------------------------------
+# CH3
+#
+      f007_th_457a2_temp:
+        sensor_type: temperature
+#        name: ch3_temp
+      f007_th_457a2_bat:
+        sensor_type: battery
+#        name: ch3_bat
+      f007_th_457a2_hum:
+        sensor_type: humidity
+#        name: ch3_hum
+
+
+
+
+
+
+## Raspbery Pi
+## 'disk_free', 'disk_use', 'disk_use_percent', 
+## 'ipv4_address', 'ipv6_address', 
+## 'last_boot', 'load_15m', 'load_1m', 'load_5m', 
+## 'memory_free', 'memory_use', 'memory_use_percent', 
+## 'network_in', 'network_out', 'packets_in', 'packets_out', 
+## 'process', 'processor_temperature', 'processor_use', 
+## 'swap_free', 'swap_use', 'swap_use_percent', 
+## 'throughput_network_in', 'throughput_network_out'
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: processor_use
+      - type: processor_temperature
+      - type: load_1m
+      - type: ipv4_address
+        arg: eth0
+      - type: network_in
+        arg: eth0
+      - type: network_out
+        arg: eth0
+      - type: packets_in
+        arg: eth0
+      - type: packets_out
+        arg: eth0
+      - type: last_boot
+
+#
+#
+#
+  - platform: prixCarburant
+    maxDistance: 15

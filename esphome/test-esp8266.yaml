@@ -1,0 +1,94 @@
+esphome:
+  name: test-esp8266
+  includes:
+    - SG300W.h
+
+  libraries:
+    - NETSGPClient
+    - EspSoftwareSerial
+
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+  level: DEBUG 
+  baud_rate: 115200
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "bc3d5863ddecd58953528805bd462344"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.0.52
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  output_power: 10dB
+  fast_connect: true
+  power_save_mode: HIGH
+
+web_server:
+  port: 80
+
+captive_portal:
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto my_custom = new customUartSg300w();
+    App.register_component(my_custom);
+    return {my_custom->Vdc_sensor, my_custom->Adc_sensor, my_custom->Wdc_sensor, my_custom->Vac_sensor, my_custom->Aac_sensor, my_custom->Wac_sensor,  my_custom->Wtot_sensor,  my_custom->Temp_sensor,  my_custom->Rend_sensor};
+  sensors:
+  - name: "Vdc"
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    id: pv_vdc
+    
+  - name: "Adc"
+    unit_of_measurement: A
+    accuracy_decimals: 2
+    id: pv_adc
+    
+  - name: "Wdc"
+    unit_of_measurement: W
+    accuracy_decimals: 1
+    id: pv_wdc
+    
+  - name: "Vac"
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    id: pv_vac
+    
+  - name: "Aac"
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    id: pv_aac
+    
+  - name: "Wac"
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    id: pv_wac
+    
+  - name: "Total_kW"
+    unit_of_measurement: kW
+    accuracy_decimals: 1
+    id: pv_totalkW
+    
+  - name: "Temp"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    id: pv_temp
+    
+  - name: "Rendement"
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    id: pv_rend
+    
+    
+    

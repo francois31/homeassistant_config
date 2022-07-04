@@ -1,0 +1,43 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts: !include configuration/tts.yaml
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+zone: !include configuration/zones.yaml
+
+rflink: !include configuration/rflink.yaml
+
+influxdb: !include configuration/influxdb.yaml
+
+webostv: !include configuration/webostv.yaml
+
+logger: !include configuration/logger.yaml
+    
+light: !include configuration/lights.yaml
+
+switch: !include configuration/switchs.yaml
+
+binary_sensor: !include configuration/binary_sensors.yaml
+
+rest: !include configuration/rest.yaml
+
+#device_sun_light_trigger: !include configuration/presence_lights.yaml
+
+#template: !include configuration/template.yaml
+
+utility_meter: !include configuration/utility_meter.yaml
+
+sensor: !include configuration/sensors.yaml
+
+camera: !include configuration/camera.yaml
+ 

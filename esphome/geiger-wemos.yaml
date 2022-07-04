@@ -1,0 +1,82 @@
+esphome:
+  name: geiger-wemos
+  includes:
+    - uart_read_line_sensor.h
+    
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+  level: DEBUG 
+  baud_rate: 115200
+
+api:
+
+ota:
+  password: "2c3469b8fa109bca049a88993369595a"
+
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.0.53
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+  output_power: 10dB
+  fast_connect: true
+  power_save_mode: HIGH
+
+web_server:
+  port: 80
+
+captive_portal:
+
+switch:
+  - platform: gpio
+    pin: D4
+    inverted: true
+    name: "LED"
+
+uart:
+  id: uart_bus
+#  tx_pin: D8
+  rx_pin: D7
+  baud_rate: 9600
+  debug:
+    direction: BOTH
+    dummy_receiver: false
+    after:
+      delimiter: "\n"
+    sequence:
+      - lambda: UARTDebug::log_string(direction, bytes);
+
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto my_geiger_sensor = new UartReadLineSensor(id(uart_bus));
+    App.register_component(my_geiger_sensor);
+    return {my_geiger_sensor->CPM_sensor, my_geiger_sensor->Sivert_sensor, my_geiger_sensor->VCC_sensor };
+  sensors:
+  - name: "GEIGER CPM Sensor"
+    unit_of_measurement: CPM
+    accuracy_decimals: 0
+  - name: "GEIGER Sivert Sensor"
+    unit_of_measurement: uSv/h
+    accuracy_decimals: 3
+    filters:
+    - median:
+        window_size: 5
+        send_every: 2
+        send_first_at: 2
+  - name: "GEIGER Vcc Sensor"
+    unit_of_measurement: V
+    accuracy_decimals: 2
+    filters:
+      - median:
+          window_size: 7
+          send_every: 4
+          send_first_at: 3
