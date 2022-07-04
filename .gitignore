@@ -29,5 +29,5 @@
 .storage
 .cloud
 .google.token 
-home-assistant.log
+home-assistant*
 secrets.yaml
